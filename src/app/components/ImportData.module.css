@@ -1,46 +1,132 @@
-.error {
-    color:white;
-    background-color: red;
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(4, minmax(100px, auto));
+  grid-gap: 20px;
+  justify-content: center;
+  position: relative;
 }
 
-.matched-csv-header{
-    color: green;
-    background-color: lightgreen;
+.matchedHeadersGridItem {
+  grid-column-start: 1;
+  grid-column-end: 10;
+  justify-self: center;
 }
 
-.unmatched-csv-header{
-    color: red;
-    background-color: lightcoral;
-    cursor: pointer;
+.selectedRowStyling {
+  border: 1px solid #559fca;
+  grid-column-start: 2;
+  grid-column-end: 9;
+  grid-row: 2;
+  z-index: 1;
 }
 
-.unmatched-csv-header:hover{
-    color: white;
-    background-color: red;
+.selectedCsvHeaderGridItem {
+  grid-column-start: 2;
+  grid-column-end: 5;
+  grid-row: 2;
+  z-index: 2;
+}
+.matchButtonGridItem {
+  grid-column-start: 5;
+  grid-column-end: 5;
+  grid-row: 2;
+  align-self: center;
+  align-content: center;
+  z-index: 2;
 }
 
-.selected-header{
-    background-color: darkcyan
+.selectedAcceptableHeaderGridItem {
+  grid-column-start: 6;
+  grid-column-end: 9;
+  grid-row: 2;
+  align-self: top;
+  z-index: 2;
+}
+
+.unmatchedCsvHeadersGridItem {
+  grid-column-start: 2;
+  grid-column-end: 5;
+  justify-self: center;
+  grid-row: 3;
+}
+
+.unmatchedAcceptableHeadersGridItem {
+  grid-column-start: 5;
+  grid-column-end: 9;
+  justify-self: center;
+  grid-row: 3;
+  display: flex;
+  justify-content: space-between;
+}
+
+.submitNewDataButtonGridItem {
+  grid-column-start: 1;
+  grid-column-end: 10;
+  grid-row: 4;
+}
+
+/* .headersGridContainer {
+  display: grid;
+  grid-template-rows: 0.25fr 4fr 4fr;
+  background-color: #999;
+  /* grid-gap: 20px; */
+/* justify-content: center;
+} */
+
+.matched-csv-header {
+  color: green;
+  background-color: lightgreen;
+}
+
+.unmatched-csv-header {
+  color: red;
+  background-color: lightcoral;
+  cursor: pointer;
+}
+
+.unmatched-csv-header:hover {
+  color: white;
+  background-color: red;
+}
+
+.selected-header {
+  background-color: darkcyan;
 }
 
 .custom-file-upload {
-    padding: 10px;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .custom-file-upload:hover {
-    background-color: #45a049;
+  background-color: #45a049;
 }
 
 .tableCell {
-    border: 1px solid #999;
-    padding: 0.5rem;
-  }
+  border: 1px solid #999;
+  padding: 0.5rem;
+}
 
-.unmatched-acceptable-fields{
-    cursor:pointer;
+.unmatched-acceptable-fields {
+  cursor: pointer;
+}
+
+.matchedHeader {
+  background-color: #45a049;
+  color: white;
+}
+
+.unmatchedHeader {
+  background-color: #f44336;
+  color: white;
+}
+
+.selectedHeader {
+  background-color: blue;
+  color: white;
 }
