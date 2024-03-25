@@ -1,12 +1,16 @@
-import { CsvPreviewDisplay } from "./CsvPreviewDisplay";
-import { UnmatchedAcceptableFields } from "./UnmatchedAcceptableFields";
-import { useState,useEffect } from "react";
+import { CsvHeaders } from "./CsvHeaders";
+import { SubmitNewDataButton } from "./SubmitNewDataButton";
+import { AcceptableHeaders } from "./AcceptableHeaders";
+import { useState, useEffect} from "react";
+import { MatchedHeaders } from "./MatchedHeaders";
+import { MatchButton } from "./MatchButton";
+import { StylingElements } from "./StylingElements";
 
 type TickModelHeadersType = Record<string, boolean>
 type FieldMatchingUIProps = {
-    csvInfo: { header: string, count: number, percentage: number }[], 
-    previewRecords: JSON[],
-    setPreviewRecords: React.Dispatch<React.SetStateAction<JSON[]>>}
+    csvInfo: { header: string, count: number, percentage: number }[],
+    totalRecords: Record<string, any>[]
+}
 
 const tickModelHeaders: TickModelHeadersType = {
         routeName: true,
@@ -28,36 +32,50 @@ const tickModelHeaders: TickModelHeadersType = {
         pitches: false,
 }
 
+const requiredHeaders = Object.keys(tickModelHeaders).filter(header => tickModelHeaders[header as keyof typeof tickModelHeaders])
 
-export function FieldMatchingUI({ csvInfo, previewRecords, setPreviewRecords} : FieldMatchingUIProps ) {
-    const [matchedHeaders, setMatchedHeaders] = useState<string[]>([]);
+export function FieldMatchingUI({ csvInfo, totalRecords } : FieldMatchingUIProps ) {
+    const [matchedHeaders, setMatchedHeaders] = useState<Record<string,string>>({});
     const [unmatchedHeaders, setUnmatchedHeaders] = useState<string[]>([]);
-    const [selectedHeader, setSelectedHeader] = useState<string | null>(null);
+    const [selectedAcceptableHeader, setSelectedAcceptableHeader] = useState<string | null>(null);
+    const [selectedCsvHeader, setSelectedCsvHeader] = useState<string | null>(null);
     
+    const totalMatched: number = matchedHeaders ? Object.keys(matchedHeaders).length : 0;
+    const percentComplete = totalMatched ? totalMatched / csvInfo.length * 100 : 0;
 
     useEffect(() => {
-        csvInfo.forEach((csvInfo) => {
-            handleHeaderMatch(csvInfo.header);
+        csvInfo.forEach((record) => {
+            handleInitialHeaderMatch(record.header);
         });
     }, [csvInfo]);
 
+    useEffect(() => {
+        if (!selectedCsvHeader) {
+            const firstUnmatchedCsvHeader = csvInfo.find(({ header }) => !Object.keys(matchedHeaders).includes(header));
+            if (firstUnmatchedCsvHeader) {
+                setSelectedCsvHeader(firstUnmatchedCsvHeader.header);
+            }
+        }
+        if (!selectedAcceptableHeader) {
+            const firstUnmatchedAcceptableHeader = Object.keys(tickModelHeaders).find(header => !(header in matchedHeaders));
+            if (firstUnmatchedAcceptableHeader) {
+                setSelectedAcceptableHeader(firstUnmatchedAcceptableHeader);
+            }
+        }
+    },[])
 
-    function handleHeaderMatch(header: string) {
-        if (!header) return;
-        const lowerHeader = header.trim().toLowerCase()
-        if (lowerHeader in tickModelHeaders) {
+    function handleInitialHeaderMatch(csvHeader: string):void {
+        if (!csvHeader) return;
+        const lowerCsvHeader = csvHeader.trim().toLowerCase();
+        const matchedTickModelHeader = Object.keys(tickModelHeaders).find(header => header.toLowerCase() === lowerCsvHeader);
+    
+        if (matchedTickModelHeader) {
             setMatchedHeaders(prevMatchedHeaders => {
-                if (!prevMatchedHeaders.includes(lowerHeader)) {
-                    return [...prevMatchedHeaders, lowerHeader];
-                }
-                return prevMatchedHeaders;
+                return { ...prevMatchedHeaders, [matchedTickModelHeader]: csvHeader };
             });
         } else {
             setUnmatchedHeaders(prevUnmatchedHeaders => {
-                if (!prevUnmatchedHeaders.includes(lowerHeader)) {
-                    return [...prevUnmatchedHeaders, lowerHeader];
-                }
-                return prevUnmatchedHeaders;
+                return [ ...prevUnmatchedHeaders, csvHeader ];
             });
         }
     }
@@ -65,24 +83,44 @@ export function FieldMatchingUI({ csvInfo, previewRecords, setPreviewRecords} : 
 
     return (
         <>
-
-            <UnmatchedAcceptableFields 
-            setSelectedHeader={setSelectedHeader}
-            selectedHeader={selectedHeader} 
-            tickModelHeaders={tickModelHeaders}  
-            matchedHeaders={matchedHeaders} 
-            unmatchedHeaders={unmatchedHeaders}  />
-
-            <CsvPreviewDisplay 
-            csvInfo={csvInfo}
-            matchedHeaders={matchedHeaders} 
-            unmatchedHeaders={unmatchedHeaders}
-            previewRecords={previewRecords}
-            setPreviewRecords={setPreviewRecords}
-            selectedHeader={selectedHeader}
+            <MatchedHeaders 
+            matchedHeaders={matchedHeaders}
+            requiredHeaders={requiredHeaders}
+            setSelectedAcceptableHeader={setSelectedAcceptableHeader}
+            setSelectedCsvHeader={setSelectedCsvHeader}
+            setMatchedHeaders={setMatchedHeaders}  
             />
 
+            <AcceptableHeaders 
+            setSelectedAcceptableHeader={setSelectedAcceptableHeader}
+            selectedAcceptableHeader={selectedAcceptableHeader}   
+            matchedHeaders={matchedHeaders} 
+            unmatchedHeaders={unmatchedHeaders} 
+            tickModelHeaders={tickModelHeaders} 
+            />
 
+            <MatchButton selectedCsvHeader={selectedCsvHeader}
+            selectedAcceptableHeader={selectedAcceptableHeader}
+            setMatchedHeaders={setMatchedHeaders}
+            setSelectedAcceptableHeader={setSelectedAcceptableHeader}
+            setSelectedCsvHeader={setSelectedCsvHeader}
+            />
+
+            <CsvHeaders 
+            setSelectedCsvHeader={setSelectedCsvHeader}
+            selectedCsvHeader={selectedCsvHeader}
+            matchedHeaders={matchedHeaders} 
+            unmatchedHeaders={unmatchedHeaders}
+            csvInfo={csvInfo}
+            totalRecords={totalRecords}
+            />
+
+            <StylingElements />
+
+            {/* <h1>{percentComplete} % matched</h1> */}
+
+
+            <SubmitNewDataButton matchedHeaders={matchedHeaders} totalRecords={totalRecords}/>
         </>
     );
 }

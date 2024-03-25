@@ -6,11 +6,14 @@ import styles from './ImportData.module.css'
 
 type CsvFileUploadButtonProps = {
     setCsvInfo: React.Dispatch<React.SetStateAction<{ header: string, count: number, percentage: number }[]>>,
-    setTotalRecords: React.Dispatch<React.SetStateAction<number>>,
-    setPreviewRecords: React.Dispatch<React.SetStateAction<JSON[]>>
+    setTotalRecords: React.Dispatch<React.SetStateAction<Record<string, any>[]>>
 };
 
-function readFile(file: File): Promise<any[]> {
+type CsvRecord = {
+    [key: string]: any
+}
+
+function readFile(file: File): Promise<CsvRecord[]> {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -40,23 +43,21 @@ function getHeaderInfo(records: any[]) {
         count: records.filter((record: { [key: string]: any }) => record[header]).length,
         percentage: (records.filter((record: { [key: string]: any }) => record[header]).length / totalRecords) * 100,
     }));
-    return {fieldInfo, totalRecords}
+    return {fieldInfo}
 }
 
 
 
-export function CsvFileUploadButton({setCsvInfo, setTotalRecords, setPreviewRecords}: CsvFileUploadButtonProps) {
+export function CsvFileUploadButton({setCsvInfo, setTotalRecords}: CsvFileUploadButtonProps) {
     
     async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
         if (!event.target.files) return;
         const file = event.target.files[0];
         const records = await readFile(file)
-        const {fieldInfo, totalRecords} = getHeaderInfo(records);
-        const firstRows = records.slice(0, 5);
+        const {fieldInfo} = getHeaderInfo(records);
         
         setCsvInfo(fieldInfo);
-        setTotalRecords(totalRecords);
-        setPreviewRecords(firstRows);
+        setTotalRecords(records);
     }
 
     return (

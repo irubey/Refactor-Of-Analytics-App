@@ -9,9 +9,10 @@ import { FieldMatchingUI } from "../components/FieldMatchingUI"
 
 export default function ImportDataPage() {
   const [csvInfo, setCsvInfo] = useState<{ header: string, count: number, percentage: number }[]>([]);
-  const [totalRecords, setTotalRecords] = useState<number>(0);
+  const [totalRecords, setTotalRecords] = useState<Record<string, any>[]>([]);
   const [csvSuccess, setCsvSuccess] = useState<boolean>(false);
-  const [previewRecords, setPreviewRecords] = useState<JSON[]>([]);
+  const totalNumberRecords = Object.keys(totalRecords).length;
+
 
 
   useEffect(() => {
@@ -27,8 +28,7 @@ export default function ImportDataPage() {
             <>
               <CsvFileUploadButton 
               setCsvInfo={setCsvInfo} 
-              setTotalRecords={setTotalRecords}
-              setPreviewRecords={setPreviewRecords}/>
+              setTotalRecords={setTotalRecords}/>
               <b>File must end in .csv</b>
               <br />
               <Link href='/UploadInstructions'>Upload Instructions</Link>
@@ -36,12 +36,8 @@ export default function ImportDataPage() {
           }
 
             {csvSuccess && 
-            <>
-              <h3>CSV Headers</h3>
-              <p>Total Records - {totalRecords}</p>
-              <FieldMatchingUI csvInfo={csvInfo} previewRecords={previewRecords} setPreviewRecords={setPreviewRecords}/>
-            </>}
-
+              <FieldMatchingUI csvInfo={csvInfo} totalRecords = {totalRecords}/>
+            }
         </>
     );
 }

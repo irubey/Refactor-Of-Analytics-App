@@ -5,6 +5,7 @@ export default function Header() {
     <div>
       <Link href='/'>Home</Link>
       <Link href="/ImportData">Import Data</Link>
+      <Link href="/Visualizations">Visualizations</Link>
     </div>
   );
 }
