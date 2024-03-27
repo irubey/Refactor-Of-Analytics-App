@@ -5,12 +5,17 @@ type MatchButtonProps = {
     selectedAcceptableHeader: string | null,
     setMatchedHeaders: Function,
     setSelectedAcceptableHeader: Function,
-    setSelectedCsvHeader: Function
+    setSelectedCsvHeader: Function,
+    dateFormat?: string
 };
 
-export function MatchButton({ selectedCsvHeader, selectedAcceptableHeader, setMatchedHeaders, setSelectedAcceptableHeader, setSelectedCsvHeader }: MatchButtonProps){
+export function MatchButton({ selectedCsvHeader, selectedAcceptableHeader, setMatchedHeaders, setSelectedAcceptableHeader, setSelectedCsvHeader, dateFormat }: MatchButtonProps){
     function handleUserSelectedHeaderMatch() {
         if (!selectedCsvHeader || !selectedAcceptableHeader) return;
+        if (selectedAcceptableHeader == 'date' && !dateFormat){
+            alert('Please select a date format')
+            return;
+        }
         setMatchedHeaders((prevMatchedHeaders: Record<string,string>)=> {
             return ({...prevMatchedHeaders, [selectedAcceptableHeader]: selectedCsvHeader});
         })

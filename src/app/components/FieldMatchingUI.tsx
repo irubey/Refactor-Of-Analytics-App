@@ -16,7 +16,7 @@ const tickModelHeaders: TickModelHeadersType = {
         routeName: true,
         date: true,
         routeLength: false,
-        grade: false,
+        difficultyGrade: false,
         discipline: false,
         attempts: true,
         sends: true,
@@ -39,6 +39,7 @@ export function FieldMatchingUI({ csvInfo, totalRecords } : FieldMatchingUIProps
     const [unmatchedHeaders, setUnmatchedHeaders] = useState<string[]>([]);
     const [selectedAcceptableHeader, setSelectedAcceptableHeader] = useState<string | null>(null);
     const [selectedCsvHeader, setSelectedCsvHeader] = useState<string | null>(null);
+    const [dateFormat, setDateFormat] = useState<string>('');
     
     const totalMatched: number = matchedHeaders ? Object.keys(matchedHeaders).length : 0;
     const percentComplete = totalMatched ? totalMatched / csvInfo.length * 100 : 0;
@@ -88,7 +89,7 @@ export function FieldMatchingUI({ csvInfo, totalRecords } : FieldMatchingUIProps
             requiredHeaders={requiredHeaders}
             setSelectedAcceptableHeader={setSelectedAcceptableHeader}
             setSelectedCsvHeader={setSelectedCsvHeader}
-            setMatchedHeaders={setMatchedHeaders}  
+            setMatchedHeaders={setMatchedHeaders}
             />
 
             <AcceptableHeaders 
@@ -104,6 +105,7 @@ export function FieldMatchingUI({ csvInfo, totalRecords } : FieldMatchingUIProps
             setMatchedHeaders={setMatchedHeaders}
             setSelectedAcceptableHeader={setSelectedAcceptableHeader}
             setSelectedCsvHeader={setSelectedCsvHeader}
+            dateFormat={dateFormat}
             />
 
             <CsvHeaders 
@@ -113,6 +115,8 @@ export function FieldMatchingUI({ csvInfo, totalRecords } : FieldMatchingUIProps
             unmatchedHeaders={unmatchedHeaders}
             csvInfo={csvInfo}
             totalRecords={totalRecords}
+            dateFormat={dateFormat}
+            setDateFormat={setDateFormat}
             />
 
             <StylingElements />
@@ -120,7 +124,7 @@ export function FieldMatchingUI({ csvInfo, totalRecords } : FieldMatchingUIProps
             {/* <h1>{percentComplete} % matched</h1> */}
 
 
-            <SubmitNewDataButton matchedHeaders={matchedHeaders} totalRecords={totalRecords}/>
+            <SubmitNewDataButton matchedHeaders={matchedHeaders} totalRecords={totalRecords} dateFormat={dateFormat}/>
         </>
     );
 }

@@ -16,7 +16,7 @@ const acceptableHeadersExample: Record<string,string[]> = {
     routeName: ["Name of Route", "The Nose","Biographie", "Freeway"],
     date: ["Date of Record", "01/01/2021","2021-01-01"],
     routeLength: ["Route Length","55","55m","55ft"],
-    grade: ["Difficulty Grade", "V3","5.10a", "5.10-", "5.10a/b", "6b+", "6b/+"],
+    difficultyGrade: ["Difficulty Grade", "V3","5.10a", "5.10-", "5.10a/b", "6b+", "6b/+"],
     discipline: ["What Kind of Climbing","Boulder", "Lead", "Sport", "Trad", "Solo"],
     attempts: ["Attempts that were not clean","0","1"],
     sends: ["Clean Ascents","0","1"],
