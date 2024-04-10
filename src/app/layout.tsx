@@ -1,5 +1,5 @@
 import '@styles/global.css'
-import Header from "./Header"
+import NavBar from "@components/NavBar"
 
 export const metadata = {
     title: 'Climbing App',
@@ -14,7 +14,7 @@ export const metadata = {
     return (
       <html lang="en">
         <body>
-          <Header />
+          <NavBar />
           {children}
         </body>
       </html>

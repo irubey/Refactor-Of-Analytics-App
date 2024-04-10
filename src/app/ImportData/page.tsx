@@ -1,9 +1,9 @@
 "use client"
 
-import { CsvFileUploadButton } from "@components/CsvFileUploadButton";
+import { CsvFileUploadButton } from "@ImportData/components/CsvFileUploadButton";
 import Link from 'next/link';
 import { useState } from 'react';
-import { FieldMatchingUI } from "../components/FieldMatchingUI"
+import { FieldMatchingUI } from "./components/FieldMatchingUI"
 
 
 
