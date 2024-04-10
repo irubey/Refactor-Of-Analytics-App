@@ -1,70 +1,89 @@
 import React from 'react';
-import { Header } from './Header'
-import styles from './ImportData.module.css';
+import { DbHeader } from './DbHeader'
+
+import { useState, useEffect } from 'react';
+
+type TickModelHeadersType = {
+    name: string,
+    description: string,
+    exampleData: string[],
+    category: string,
+    needsValidation: boolean,
+    required: boolean
+}[]
 
 type UnmatchedAcceptableFieldsProps = {
     setSelectedAcceptableHeader: Function,
     selectedAcceptableHeader: string | null,
     matchedHeaders:  Record<string, string>,
-    unmatchedHeaders: string[],
-    tickModelHeaders: Record<string, boolean>
+    unmatchedUserHeaders: string[],
+    tickModelHeaders: TickModelHeadersType
 }
 
-const dayInfo = ["date","location","sessionCharacteristics", "indoorsOrOutdoors", "typeOfWorkout"]
 
-const routeInfo = ["routeName", "routeLength", "difficultyGrade", "discipline", "attempts", "sends", "ascentStyle", "leadStyle", "dangerGrade", "routeQuality", "notes", "routeCharacteristics", "pitches"]
+export function AcceptableHeaders({ setSelectedAcceptableHeader,  selectedAcceptableHeader, matchedHeaders, unmatchedUserHeaders, tickModelHeaders }: UnmatchedAcceptableFieldsProps) {
+    const [sessionHeaders, setSessionHeaders] = useState<string[]>([]);
+    const [routeHeaders, setRouteHeaders] = useState<string[]>([]);
+    const [exerciseHeaders, setExerciseHeaders] = useState<string[]>([]);
+
+    useEffect(() => {
+        setSessionHeaders(tickModelHeaders
+            .filter(header => header.category === "session" && !(header.name in matchedHeaders) && selectedAcceptableHeader !== header.name)
+            .map(header => header.name));
+    }, [selectedAcceptableHeader, matchedHeaders])
+
+    useEffect(() => {
+        setRouteHeaders(tickModelHeaders
+            .filter(header => header.category === "route" && !(header.name in matchedHeaders) && selectedAcceptableHeader !== header.name)
+            .map(header => header.name));
+    }, [selectedAcceptableHeader, matchedHeaders])
+
+    useEffect(() => {
+        setExerciseHeaders(tickModelHeaders
+            .filter(header => header.category === "other" && !(header.name in matchedHeaders) && selectedAcceptableHeader !== header.name)
+            .map(header => header.name));
+    }, [selectedAcceptableHeader, matchedHeaders])
 
 
-export function AcceptableHeaders({ setSelectedAcceptableHeader,  selectedAcceptableHeader, matchedHeaders, unmatchedHeaders, tickModelHeaders }: UnmatchedAcceptableFieldsProps) {
-
-    const sortedHeaders = Object.keys(tickModelHeaders).sort((a, b) => {
-        if (a === selectedAcceptableHeader) {
-            return -1;
-        } else if (b === selectedAcceptableHeader) {
-            return 1;
-        } else {
-            return 0;
-        }
-    });
 
     return (
-        <>
-            <div className={styles.selectedAcceptableHeaderGridItem}>
-                {!selectedAcceptableHeader && (
-                    <div className={styles.selectedHeader}>
-                        hello
-                    </div>)}
-                {selectedAcceptableHeader && (
-                    <div>
-                        <h2>Selected acceptable</h2>
-                        <div>
-                            <ul>
-                                <Header key={selectedAcceptableHeader} setSelectedAcceptableHeader={setSelectedAcceptableHeader} selectedAcceptableHeader={selectedAcceptableHeader} header={selectedAcceptableHeader} type="selected" source="acceptable" />
-                            </ul>
-                        </div>
-                    </div>
-                )}
-            </div>
-            <div className={styles.unmatchedAcceptableHeadersGridItem}>
-                <ul>
-                    {sortedHeaders.map((header, index) => {
-                        if (!(header in matchedHeaders) && header !== selectedAcceptableHeader && dayInfo.includes(header)) {
-                            return (
-                                <Header key={`${header}-${index}`} setSelectedAcceptableHeader={setSelectedAcceptableHeader} selectedAcceptableHeader={selectedAcceptableHeader} header={header} type="unmatched" source="acceptable" />
-                            )
-                        }
-                    })}
-                </ul>
-                <ul>
-                    {sortedHeaders.map((header, index) => {
-                        if (!(header in matchedHeaders) && header !== selectedAcceptableHeader && routeInfo.includes(header)) {
-                            return (
-                                <Header key={`${header}-${index}`} setSelectedAcceptableHeader={setSelectedAcceptableHeader} selectedAcceptableHeader={selectedAcceptableHeader} header={header} type="unmatched" source="acceptable" />
-                            )
-                        }
-                    })}
-                </ul>
-            </div>
-        </>
+        <div>
+            <ul>
+                <h2 className='underline'>Session</h2>
+                {sessionHeaders.map((header, index) => (
+                    <li key={index}>
+                        <DbHeader
+                        header={header}
+                        setSelectedAcceptableHeader={setSelectedAcceptableHeader}
+                        tickModelHeaders={tickModelHeaders}
+                        />
+                    </li>
+                ))}
+            </ul>
+            <ul>
+                <h2 className='underline'>Route</h2>
+                {routeHeaders.map((header, index) => (
+                    <li key={index}>
+                    <DbHeader
+                    header={header}
+                    setSelectedAcceptableHeader={setSelectedAcceptableHeader}
+                    tickModelHeaders={tickModelHeaders}
+                    />
+                </li>
+                ))}
+            </ul>
+            <ul>
+                <h2 className='underline'>Exercise</h2>
+                {exerciseHeaders.map((header, index) => (
+                    <li key={index}>
+                    <DbHeader
+                    header={header}
+                    setSelectedAcceptableHeader={setSelectedAcceptableHeader}
+                    tickModelHeaders={tickModelHeaders}
+                    />
+                </li>
+                ))}
+            </ul>
+        </div>
     );
 }
