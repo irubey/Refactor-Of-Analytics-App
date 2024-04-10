@@ -1,76 +1,52 @@
 "use client"
 
-import {parse} from 'csv-parse/sync'
-import styles from './ImportData.module.css'
+import { action } from '@actions/parse-user-spreadsheet.server'
+
+// const workSheetsFromFile = xlsx.parse(`${__dirname}/myFile.xlsx`)
 
 
 type CsvFileUploadButtonProps = {
-    setCsvInfo: React.Dispatch<React.SetStateAction<{ header: string, count: number, percentage: number }[]>>,
     setTotalRecords: React.Dispatch<React.SetStateAction<Record<string, any>[]>>
+    setFileInfo: React.Dispatch<React.SetStateAction<FileInfo>>
 };
 
-type CsvRecord = {
-    [key: string]: any
-}
-
-function readFile(file: File): Promise<CsvRecord[]> {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            if (e.target) {
-                const contents = e.target.result as string;
-                const records = parse(contents, {
-                    columns: true,
-                    skipEmptyLines: true,
-                })
-                resolve(records);
-            }
-        }
-        reader.onerror = (e) => {
-            reject(new Error("Failed to read file"));
-        }
-        reader.readAsText(file)
-    });
+type FileInfo = {  
+    name: string;
+    type: string;
 }
 
 
 
-function getHeaderInfo(records: any[]) {
-    const totalRecords = records.length;
-    const csvHeaders = Object.keys(records[0]);
-    const fieldInfo = csvHeaders.map((header) => ({
-        header,
-        count: records.filter((record: { [key: string]: any }) => record[header]).length,
-        percentage: (records.filter((record: { [key: string]: any }) => record[header]).length / totalRecords) * 100,
-    }));
-    return {fieldInfo}
-}
+export function CsvFileUploadButton({setTotalRecords, setFileInfo}: CsvFileUploadButtonProps) {
 
-
-
-export function CsvFileUploadButton({setCsvInfo, setTotalRecords}: CsvFileUploadButtonProps) {
-    
-    async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
+    const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files) return;
         const file = event.target.files[0];
-        const records = await readFile(file)
-        const {fieldInfo} = getHeaderInfo(records);
-        
-        setCsvInfo(fieldInfo);
-        setTotalRecords(records);
-    }
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await action(formData); 
+            if (!response) return;
+            const { totalRecords, ...fileInfo } = response;
+            setTotalRecords(totalRecords);
+            setFileInfo({...file});
+        } catch (error) {
+            console.error('Error processing the file:', error);
+        }
+    };
 
     return (
         <>
-            <form>
-                <input type="file"
+            <form action = {()=> {
+                console.log('form submitted')
+            }}>
+                <input 
+                type="file"
                 id='fileUpload'
-                accept=".csv" 
                 onChange={handleFileUpload}
-                style={{display: 'none'}}/>
-            <label htmlFor="fileUpload" className={styles['custom-file-upload']}>
-                Upload CSV
-            </label>
+                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                />
             </form>
             
         </>

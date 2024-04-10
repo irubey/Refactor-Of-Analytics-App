@@ -1,15 +1,13 @@
-import styles from './ImportData.module.css'
-
-type MatchButtonProps = {
-    selectedCsvHeader: string| null,
+type LinkButtonProps = {
+    selectedCsvHeader: string | null,
     selectedAcceptableHeader: string | null,
     setMatchedHeaders: Function,
-    setSelectedAcceptableHeader: Function,
     setSelectedCsvHeader: Function,
+    setSelectedAcceptableHeader: Function
     dateFormat?: string
-};
+}
 
-export function MatchButton({ selectedCsvHeader, selectedAcceptableHeader, setMatchedHeaders, setSelectedAcceptableHeader, setSelectedCsvHeader, dateFormat }: MatchButtonProps){
+export function LinkButton({ selectedCsvHeader, selectedAcceptableHeader, setMatchedHeaders, setSelectedCsvHeader, setSelectedAcceptableHeader, dateFormat}: LinkButtonProps) {
     function handleUserSelectedHeaderMatch() {
         if (!selectedCsvHeader || !selectedAcceptableHeader) return;
         if (selectedAcceptableHeader == 'date' && !dateFormat){
@@ -27,16 +25,16 @@ export function MatchButton({ selectedCsvHeader, selectedAcceptableHeader, setMa
         <>
             {selectedCsvHeader && selectedAcceptableHeader && (
             <button 
-            className={styles.matchButtonGridItem} 
             onClick={handleUserSelectedHeaderMatch}>
-            Match
+            Link
             </button>
             )}
             {(!selectedCsvHeader || !selectedAcceptableHeader) && (
-                <div className={styles.matchButtonGridItem}>
+                <div className='border'>
                     Please Select a header from both sides
                 </div>
             )}
         </>
     )
 }
+

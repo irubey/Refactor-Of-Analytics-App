@@ -1,3 +1,4 @@
+import '@styles/global.css'
 import Header from "./Header"
 
 export const metadata = {

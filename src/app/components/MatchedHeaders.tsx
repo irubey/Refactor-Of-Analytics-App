@@ -1,4 +1,9 @@
-import styles from './ImportData.module.css'
+
+import chainLink from '@static/chainLink.png';
+import Image from 'next/image';
+
+
+
 
 type MatchedHeadersProps = {
     matchedHeaders: Record<string, string>,
@@ -21,18 +26,19 @@ export function MatchedHeaders({matchedHeaders, requiredHeaders, setSelectedAcce
     
 
     return (
-        <div className={styles.matchedHeadersGridItem}>
+        <div>
             <h1>
                 Matched Headers
             </h1>
             <ul>
                 {Object.entries(matchedHeaders).map(([acceptable, csv], index) => {
                     return (
-                        <li className={styles.matchedHeader} 
-                            key={`${acceptable}-${index}`}
-                            onClick={() => handleClick(acceptable, csv)}
-                            >
-                            {csv} : {acceptable} 
+                        <li  key={`${acceptable}-${index}`}>
+                            {csv}
+                            <button onClick={() => handleClick(acceptable, csv)}>
+                                <Image src={chainLink} alt="linked icon" style={{ width:40, height:'auto'}}/>
+                            </button>
+                            {acceptable} 
                         </li>
                     )
                 })}

@@ -1,42 +1,43 @@
 "use client"
 
-import { CsvFileUploadButton } from "@/app/components/CsvFileUploadButton";
+import { CsvFileUploadButton } from "@components/CsvFileUploadButton";
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FieldMatchingUI } from "../components/FieldMatchingUI"
 
 
 
 export default function ImportDataPage() {
-  const [csvInfo, setCsvInfo] = useState<{ header: string, count: number, percentage: number }[]>([]);
+  type FileInfo = {
+    name: string;
+    type: string;
+  }
+
   const [totalRecords, setTotalRecords] = useState<Record<string, any>[]>([]);
-  const [csvSuccess, setCsvSuccess] = useState<boolean>(false);
+  const [fileInfo, setFileInfo] = useState<FileInfo>({ name: '', type: '' });
   const totalNumberRecords = Object.keys(totalRecords).length;
 
 
-
-  useEffect(() => {
-    if (csvInfo.length != 0) {
-      setCsvSuccess(true);}
-    else setCsvSuccess(false)
-    },[csvInfo])
+  const hasRecords = totalNumberRecords > 0;
 
 
     return (
         <>
-          {csvSuccess === false &&
+          {!hasRecords &&
             <>
               <CsvFileUploadButton 
-              setCsvInfo={setCsvInfo} 
-              setTotalRecords={setTotalRecords}/>
+              setTotalRecords={setTotalRecords}
+              setFileInfo={setFileInfo}/>
               <b>File must end in .csv</b>
               <br />
               <Link href='/UploadInstructions'>Upload Instructions</Link>
             </>
           }
 
-            {csvSuccess && 
-              <FieldMatchingUI csvInfo={csvInfo} totalRecords = {totalRecords}/>
+            { hasRecords && 
+              <FieldMatchingUI 
+              totalRecords = {totalRecords}
+              fileInfo = {fileInfo}/>
             }
         </>
     );

@@ -1,5 +1,5 @@
-import { CleanNewSpreadsheets } from './ServerActions/CleanNewSpreadsheets';
-import styles from './ImportData.module.css';
+import { CleanNewSpreadsheets } from '@api/ServerActions/CleanNewSpreadsheets';
+
 
 type SubmitNewDataButtonProps = {
     matchedHeaders: Record<string, string>;
@@ -14,6 +14,6 @@ export function SubmitNewDataButton({ matchedHeaders, totalRecords, dateFormat }
     }
 
     return (
-        <button className={styles.submitNewDataButtonGridItem} onClick={handleClick}>Submit New Data</button>
+        <button onClick={handleClick}>Submit New Data</button>
     );
 }
