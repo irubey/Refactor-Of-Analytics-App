@@ -2,10 +2,6 @@ import { parse } from "csv-parse/sync"
 import xlsx from "node-xlsx"
 
 type RecordObject = Record<string, any>
-type FileInfo = {
-  name: string
-  type: string
-}
 
 const excelDateToJSDate = (serial: number) => {
   const utc_days = Math.floor(serial - 25569)

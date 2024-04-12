@@ -7,13 +7,13 @@ import Image from 'next/image';
 
 type MatchedHeadersProps = {
     matchedHeaders: Record<string, string>,
-    requiredHeaders: string[],
+    needsValidationMatchedHeaders: string[],
     setSelectedAcceptableHeader: (header: string) => void,
     setSelectedCsvHeader: (header: string) => void,
     setMatchedHeaders: (headers: Record<string, string>) => void
 };
 
-export function MatchedHeaders({matchedHeaders, requiredHeaders, setSelectedAcceptableHeader, setSelectedCsvHeader, setMatchedHeaders}: MatchedHeadersProps) {
+export function MatchedHeaders({matchedHeaders, needsValidationMatchedHeaders, setSelectedAcceptableHeader, setSelectedCsvHeader, setMatchedHeaders}: MatchedHeadersProps) {
     
     const handleClick = (acceptable: string, csv: string) => {
         if (!csv || !acceptable) return;

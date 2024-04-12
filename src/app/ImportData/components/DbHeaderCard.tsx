@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-type TickModelHeadersType = {
-    name: string,
-    description: string,
-    exampleData: string[],
-    category: string,
-    needsValidation: boolean,
-    required: boolean
-}[]
 
 type DbHeaderCardProps = {
     selectedAcceptableHeader: string | null,

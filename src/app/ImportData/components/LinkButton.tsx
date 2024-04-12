@@ -1,10 +1,12 @@
+import {DateFormat} from '@ImportData/types/UITypes';
+
 type LinkButtonProps = {
     selectedCsvHeader: string | null,
     selectedAcceptableHeader: string | null,
     setMatchedHeaders: Function,
     setSelectedCsvHeader: Function,
     setSelectedAcceptableHeader: Function
-    dateFormat?: string
+    dateFormat?: DateFormat
 }
 
 export function LinkButton({ selectedCsvHeader, selectedAcceptableHeader, setMatchedHeaders, setSelectedCsvHeader, setSelectedAcceptableHeader, dateFormat}: LinkButtonProps) {

@@ -1,23 +1,25 @@
 "use client"
 
 import { action } from '@actions/parse-user-spreadsheet.server'
+import { handleAutomaticFieldMatch } from '@actions/handle-automatic-field-match.server';
+import {TotalRecords, TickModelHeaders, FileInfo} from '@ImportData/types/UITypes'
 
 // const workSheetsFromFile = xlsx.parse(`${__dirname}/myFile.xlsx`)
 
-
 type CsvFileUploadButtonProps = {
-    setTotalRecords: React.Dispatch<React.SetStateAction<Record<string, any>[]>>
-    setFileInfo: React.Dispatch<React.SetStateAction<FileInfo>>
-};
-
-type FileInfo = {  
-    name: string;
-    type: string;
+    setTotalRecords: React.Dispatch<React.SetStateAction<TotalRecords>>,
+    setFileInfo: React.Dispatch<React.SetStateAction<FileInfo>>,
+    tickModelHeaders: TickModelHeaders,
+    setMatchedHeaders: React.Dispatch<React.SetStateAction<Record<string, string>>>,
+    setNeedsValidationMatchedHeaders: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 
 
-export function CsvFileUploadButton({setTotalRecords, setFileInfo}: CsvFileUploadButtonProps) {
+
+
+
+export function CsvFileUploadButton({setTotalRecords, setFileInfo, tickModelHeaders, setMatchedHeaders, setNeedsValidationMatchedHeaders}: CsvFileUploadButtonProps) {
 
     const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files) return;
@@ -28,19 +30,33 @@ export function CsvFileUploadButton({setTotalRecords, setFileInfo}: CsvFileUploa
         try {
             const response = await action(formData); 
             if (!response) return;
-            const { totalRecords, ...fileInfo } = response;
+            const { totalRecords, fileInfo } = response;
             setTotalRecords(totalRecords);
-            setFileInfo({...file});
-        } catch (error) {
+            setFileInfo(fileInfo);
+            
+            try {
+                const matchingResponse = await handleAutomaticFieldMatch(totalRecords, tickModelHeaders);
+                if (!matchingResponse) return;
+                const { matchedHeaders, needsValidationMatchedHeaders } = matchingResponse;
+                setMatchedHeaders(matchedHeaders);
+                setNeedsValidationMatchedHeaders(needsValidationMatchedHeaders);
+            }
+            catch (error) {
+                console.error('Error auto-matching file', error);
+            }
+        } 
+        
+        
+        
+        
+        catch (error) {
             console.error('Error processing the file:', error);
         }
     };
 
     return (
         <>
-            <form action = {()=> {
-                console.log('form submitted')
-            }}>
+            <form>
                 <input 
                 type="file"
                 id='fileUpload'

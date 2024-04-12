@@ -1,19 +1,27 @@
 import { useState, useEffect } from "react"
+import { FileInfo, TotalRecords, DateFormat } from "@ImportData/types/UITypes"
 
 type UserHeaderCardProps = {
     selectedCsvHeader: string | null,
-    setSelectedCsvHeader: Function,
+    setSelectedCsvHeader: React.Dispatch<React.SetStateAction<string | null>>,
     selectedAcceptableHeader: string | null,
-    unmatchedUserHeaders: string[],
-    dateFormat?: ''| 'ymd' | 'mdy' | 'dmy',
-    setDateFormat: Function,
-    totalRecords: Record<string, any>[]
+    dateFormat: DateFormat,
+    setDateFormat: React.Dispatch<React.SetStateAction<DateFormat>>,
+    totalRecords: TotalRecords,
+    fileInfo: FileInfo,
+    matchedHeaders: Record<string, string>
 }
 
-export function UserHeaderCard({ selectedCsvHeader, setSelectedCsvHeader, selectedAcceptableHeader, unmatchedUserHeaders, dateFormat, setDateFormat, totalRecords}: UserHeaderCardProps) { 
+export function UserHeaderCard({ selectedCsvHeader, setSelectedCsvHeader, selectedAcceptableHeader, dateFormat, setDateFormat, totalRecords, fileInfo, matchedHeaders}: UserHeaderCardProps) { 
 
     const [selectedHeaderData, setSelectedHeaderData] = useState<string[]>([])
     const [dontIncludeHeaders, setDontIncludeHeaders] = useState<string[]>([])
+    const [unmatchedUserHeaders, setUnmatchedUserHeaders] = useState<string[]>([])
+
+    useEffect(() => {
+        const newUnmatchedUserHeaders = fileInfo.name ? fileInfo.name.split(',') : [];
+        setUnmatchedUserHeaders(newUnmatchedUserHeaders)
+    }, [fileInfo])
 
     useEffect(() => {
         if (unmatchedUserHeaders.length && selectedCsvHeader) {

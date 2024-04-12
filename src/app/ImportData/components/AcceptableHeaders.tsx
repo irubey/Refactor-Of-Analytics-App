@@ -1,27 +1,21 @@
 import React from 'react';
 import { DbHeader } from './DbHeader'
+import { useState, useEffect } from 'react'
+import { TickModelHeaders} from '@ImportData/types/UITypes'
 
-import { useState, useEffect } from 'react';
-
-type TickModelHeadersType = {
-    name: string,
-    description: string,
-    exampleData: string[],
-    category: string,
-    needsValidation: boolean,
-    required: boolean
-}[]
-
-type UnmatchedAcceptableFieldsProps = {
-    setSelectedAcceptableHeader: Function,
+type AcceptableHeadersProps = {
+    setSelectedAcceptableHeader: React.Dispatch<React.SetStateAction<string | null>>,
     selectedAcceptableHeader: string | null,
-    matchedHeaders:  Record<string, string>,
-    unmatchedUserHeaders: string[],
-    tickModelHeaders: TickModelHeadersType
+    matchedHeaders: Record<string, string>,
+    tickModelHeaders: TickModelHeaders
 }
 
 
-export function AcceptableHeaders({ setSelectedAcceptableHeader,  selectedAcceptableHeader, matchedHeaders, unmatchedUserHeaders, tickModelHeaders }: UnmatchedAcceptableFieldsProps) {
+
+
+
+
+export function AcceptableHeaders({ setSelectedAcceptableHeader,  selectedAcceptableHeader, matchedHeaders, tickModelHeaders }: AcceptableHeadersProps) {
     const [sessionHeaders, setSessionHeaders] = useState<string[]>([]);
     const [routeHeaders, setRouteHeaders] = useState<string[]>([]);
     const [exerciseHeaders, setExerciseHeaders] = useState<string[]>([]);

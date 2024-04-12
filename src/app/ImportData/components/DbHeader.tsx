@@ -1,18 +1,7 @@
-type TickModelHeadersType = {
-    name: string,
-    description: string,
-    exampleData: string[],
-    category: string,
-    needsValidation: boolean,
-    required: boolean
-}[]
 
 
-type DbHeaderProps = {
-    header: string,
-    setSelectedAcceptableHeader: Function,
-    tickModelHeaders: TickModelHeadersType
-}
+
+
 
 
 export function DbHeader( { header, setSelectedAcceptableHeader, tickModelHeaders }: DbHeaderProps) {

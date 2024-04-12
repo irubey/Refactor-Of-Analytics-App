@@ -1,39 +1,34 @@
 import { UserHeaderCard } from './UserHeaderCard';
 import { LinkButton } from './LinkButton';
 import { DbHeaderCard } from './DbHeaderCard';
+import { TickModelHeaders, TotalRecords, DateFormat, FileInfo } from '@ImportData/types/UITypes';
 
 type SelectedHeadersProps = {
     selectedCsvHeader: string | null,
     selectedAcceptableHeader: string | null,
-    dateFormat?: ''| 'ymd' | 'mdy' | 'dmy',
-    totalRecords: Record<string, any>[],
-    setDateFormat: Function,
-    setSelectedCsvHeader: Function,
-    setSelectedAcceptableHeader: Function,
-    setMatchedHeaders: Function,
-    unmatchedUserHeaders: string[],
-    tickModelHeaders: {
-        name: string,
-        description: string,
-        exampleData: string[],
-        category: string,
-        needsValidation: boolean,
-        required: boolean
-    }[]
-    
+    dateFormat: DateFormat,
+    totalRecords: TotalRecords,
+    setDateFormat: React.Dispatch<React.SetStateAction<DateFormat>>,
+    setSelectedCsvHeader: React.Dispatch<React.SetStateAction<string | null>>,
+    setSelectedAcceptableHeader: React.Dispatch<React.SetStateAction<string | null>>,
+    setMatchedHeaders: React.Dispatch<React.SetStateAction<Record<string, string>>>,
+    tickModelHeaders: TickModelHeaders,
+    fileInfo: FileInfo,
+    matchedHeaders: Record<string, string>
 };
 
-export function SelectedHeaders({ selectedCsvHeader, selectedAcceptableHeader, dateFormat, totalRecords, setDateFormat, setSelectedCsvHeader, setSelectedAcceptableHeader, setMatchedHeaders, unmatchedUserHeaders, tickModelHeaders }: SelectedHeadersProps) {
+export function SelectedHeaders({ selectedCsvHeader, selectedAcceptableHeader, dateFormat, totalRecords, setDateFormat, setSelectedCsvHeader, setSelectedAcceptableHeader, setMatchedHeaders, tickModelHeaders, fileInfo, matchedHeaders }: SelectedHeadersProps) {
     return (
         <div className="col-span-9 grid grid-cols-3 border border-blue-500"> 
             <UserHeaderCard
             selectedCsvHeader={selectedCsvHeader}
             setSelectedCsvHeader={setSelectedCsvHeader}
             selectedAcceptableHeader={selectedAcceptableHeader}
-            unmatchedUserHeaders={unmatchedUserHeaders}
             dateFormat={dateFormat}
             setDateFormat={setDateFormat}
             totalRecords={totalRecords}
+            fileInfo={fileInfo}
+            matchedHeaders={matchedHeaders}
             />
 
             <LinkButton
