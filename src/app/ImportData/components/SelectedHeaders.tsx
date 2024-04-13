@@ -19,7 +19,7 @@ type SelectedHeadersProps = {
 
 export function SelectedHeaders({ selectedCsvHeader, selectedAcceptableHeader, dateFormat, totalRecords, setDateFormat, setSelectedCsvHeader, setSelectedAcceptableHeader, setMatchedHeaders, tickModelHeaders, fileInfo, matchedHeaders }: SelectedHeadersProps) {
     return (
-        <div className="col-span-9 grid grid-cols-3 border border-blue-500"> 
+        <div className="col-span-9 grid grid-cols-9 border border-blue-500"> 
             <UserHeaderCard
             selectedCsvHeader={selectedCsvHeader}
             setSelectedCsvHeader={setSelectedCsvHeader}

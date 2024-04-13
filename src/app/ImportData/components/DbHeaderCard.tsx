@@ -33,7 +33,7 @@ export function DbHeaderCard({ selectedAcceptableHeader, setAcceptableHeader, ti
     }, [selectedAcceptableHeader, tickModelHeaders])
     
     return (
-        <div className="col-start-3 border border-slate-900 m-4">
+        <div className="col-start-6 col-span-2 first-line:border m-4 border-green-300">
             {selectedAcceptableHeader && (
                 <>
                     <h1 className="text-blue-300 font-bold underline">{selectedAcceptableHeader}</h1>

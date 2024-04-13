@@ -16,12 +16,7 @@ export function UserHeaderCard({ selectedCsvHeader, setSelectedCsvHeader, select
 
     const [selectedHeaderData, setSelectedHeaderData] = useState<string[]>([])
     const [dontIncludeHeaders, setDontIncludeHeaders] = useState<string[]>([])
-    const [unmatchedUserHeaders, setUnmatchedUserHeaders] = useState<string[]>([])
-
-    useEffect(() => {
-        const newUnmatchedUserHeaders = fileInfo.name ? fileInfo.name.split(',') : [];
-        setUnmatchedUserHeaders(newUnmatchedUserHeaders)
-    }, [fileInfo])
+    const unmatchedUserHeaders = Object.keys(totalRecords[0]).filter((header) => !Object.values(matchedHeaders).includes(header))
 
     useEffect(() => {
         if (unmatchedUserHeaders.length && selectedCsvHeader) {
@@ -48,9 +43,11 @@ export function UserHeaderCard({ selectedCsvHeader, setSelectedCsvHeader, select
     function handleDontInclude(event: React.MouseEvent<HTMLButtonElement>) {
         if (!selectedCsvHeader) return;
         setDontIncludeHeaders([...dontIncludeHeaders, selectedCsvHeader])
-        setSelectedCsvHeader(null)
+        const newMatchedHeaders = { ...matchedHeaders };
+        delete newMatchedHeaders[selectedCsvHeader];
+        setSelectedCsvHeader(null);
+        setMatchedHeaders(newMatchedHeaders);
     }
-    console.log('selectedCsvHeader', selectedCsvHeader)
     
     function validationButton() {
         switch (selectedAcceptableHeader) {
@@ -77,25 +74,48 @@ export function UserHeaderCard({ selectedCsvHeader, setSelectedCsvHeader, select
 
 
     return (
-        <div className="col-start-1  grid grid-cols-2 border border-slate-900 m-4">
-            <h2 className="col-start-1 col-span-2 underline capitalize ">{selectedCsvHeader}</h2>
-            {selectedHeaderData && (
-                <>
-                    <ul className="col-start-1 row-start-2">
-                        {selectedHeaderData.map((headerData, index) => (
-                            <li className="truncate" key={`${headerData}-${index}`}>{headerData}</li>
-                        ))}
-                    </ul>
-                    {selectedCsvHeader && validationButton() && ( 
-                        <div className="col-start-2 row-start-2 ml-auto">
+        <>
+            {/* File Info Header */}
+                    <h1 className="col-start-3 col-span-2 underline capitalize justify-self-center truncate">
+                    {fileInfo.name}
+                </h1>
+        <div className=" col-start-3 col-span-2 grid grid-cols-3 m-4 border-2 border-blue-500">
+
+    
+            {/* CSV Header and Buttons on the same row */}
+            <div className="col-start-1 col-span-3 flex justify-between items-end">
+                <h2 className="underline capitalize">
+                    {selectedCsvHeader}
+                </h2>
+    
+                {/* Conditionally render validation button and 'Don't Include' button */}
+                <div className="flex items-end">
+                    {selectedCsvHeader && validationButton() && (
+                        <div>
                             {validationButton()}
                         </div>
                     )}
-                    <button className="col-start-2 row-start-3 border border-slate-800"
-                    onClick={handleDontInclude}> Don't Include </button>
-                </>
-
+    
+                    {/* 'Don't Include' Button */}
+                    <button onClick={handleDontInclude} className="ml-4 truncate bg-red-200">
+                        Don't Include
+                    </button>
+                </div>
+            </div>
+    
+            {/* Conditionally Render Header Data */}
+            {selectedHeaderData && (
+                <ul className="col-start-1 row-start-3 col-span-3">
+                    {selectedHeaderData.map((headerData, index) => (
+                        <li className="truncate" key={`${headerData}-${index}`}>
+                            {headerData}
+                        </li>
+                    ))}
+                </ul>
             )}
         </div>
-    )
+        </>
+    );
+    
+    
 }

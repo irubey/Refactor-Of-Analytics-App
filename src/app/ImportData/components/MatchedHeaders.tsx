@@ -26,14 +26,11 @@ export function MatchedHeaders({matchedHeaders, needsValidationMatchedHeaders, s
     
 
     return (
-        <div>
-            <h1>
-                Matched Headers
-            </h1>
+        <div className='col-span-9  '>
             <ul>
                 {Object.entries(matchedHeaders).map(([acceptable, csv], index) => {
                     return (
-                        <li  key={`${acceptable}-${index}`}>
+                        <li className='flex justify-center'  key={`${acceptable}-${index}`}>
                             {csv}
                             <button onClick={() => handleClick(acceptable, csv)}>
                                 <Image src={chainLink} alt="linked icon" style={{ width:40, height:'auto'}}/>

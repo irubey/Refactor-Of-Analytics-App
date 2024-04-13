@@ -73,22 +73,17 @@ export async function action(formData: FormData) {
 
   switch (fileEntry.type) {
     case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-      console.log("xlsx file")
       totalRecords = await parseXLSX(fileEntry)
       break
 
     case "application/vnd.ms-excel":
     case "text/csv":
-      console.log("CSV file")
       totalRecords = await parseCSV(fileEntry)
       break
 
     default:
-      console.log("Unknown file type")
       return
   }
-
-  console.log("totalRecords", totalRecords.slice(0, 1))
 
   const fileInfo: {
     name: string

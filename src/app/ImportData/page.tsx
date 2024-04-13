@@ -1,6 +1,6 @@
 "use client"
 
-import { CsvFileUploadButton } from "@ImportData/components/CsvFileUploadButton";
+import { UploadUserSpreadsheetButton } from "@ImportData/components/UploadUserSpreadsheetButton";
 import Link from 'next/link';
 import { useState } from 'react';
 import { FieldMatchingUI } from "./components/FieldMatchingUI"
@@ -191,7 +191,7 @@ export default function ImportDataPage() {
         <>
           {!hasRecords &&
             <>
-              <CsvFileUploadButton 
+              <UploadUserSpreadsheetButton 
               setTotalRecords={setTotalRecords}
               setFileInfo={setFileInfo}
               tickModelHeaders={tickModelHeaders}

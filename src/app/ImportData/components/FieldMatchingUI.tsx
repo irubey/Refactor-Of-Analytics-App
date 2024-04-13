@@ -27,7 +27,7 @@ export function FieldMatchingUI({ totalRecords, fileInfo, needsValidationMatched
 
 
     return (
-        <>
+        <div className="grid gap-1 grid-cols-9 align-middle">
             <MatchedHeaders 
             matchedHeaders={matchedHeaders}
             needsValidationMatchedHeaders={needsValidationMatchedHeaders}
@@ -57,9 +57,6 @@ export function FieldMatchingUI({ totalRecords, fileInfo, needsValidationMatched
             tickModelHeaders={tickModelHeaders} 
             />
 
-        
-
-
             <SubmitNewDataButton 
             matchedHeaders={matchedHeaders} 
             totalRecords={totalRecords} 
@@ -70,5 +67,5 @@ export function FieldMatchingUI({ totalRecords, fileInfo, needsValidationMatched
 
 
 
-        </>
+        </div>
     )}

@@ -6,7 +6,7 @@ import {TotalRecords, TickModelHeaders, FileInfo} from '@ImportData/types/UIType
 
 // const workSheetsFromFile = xlsx.parse(`${__dirname}/myFile.xlsx`)
 
-type CsvFileUploadButtonProps = {
+type UploadUserSpreadsheetButtonProps = {
     setTotalRecords: React.Dispatch<React.SetStateAction<TotalRecords>>,
     setFileInfo: React.Dispatch<React.SetStateAction<FileInfo>>,
     tickModelHeaders: TickModelHeaders,
@@ -15,11 +15,7 @@ type CsvFileUploadButtonProps = {
 }
 
 
-
-
-
-
-export function CsvFileUploadButton({setTotalRecords, setFileInfo, tickModelHeaders, setMatchedHeaders, setNeedsValidationMatchedHeaders}: CsvFileUploadButtonProps) {
+export function UploadUserSpreadsheetButton({setTotalRecords, setFileInfo, tickModelHeaders, setMatchedHeaders, setNeedsValidationMatchedHeaders}: UploadUserSpreadsheetButtonProps) {
 
     const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files) return;
@@ -45,10 +41,7 @@ export function CsvFileUploadButton({setTotalRecords, setFileInfo, tickModelHead
                 console.error('Error auto-matching file', error);
             }
         } 
-        
-        
-        
-        
+
         catch (error) {
             console.error('Error processing the file:', error);
         }

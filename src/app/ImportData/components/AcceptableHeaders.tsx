@@ -41,9 +41,9 @@ export function AcceptableHeaders({ setSelectedAcceptableHeader,  selectedAccept
 
 
     return (
-        <div>
-            <ul>
-                <h2 className='underline'>Session</h2>
+        <div className='col-span-3 col-start-4 flex justify-between'>
+            <ul className='p-2'>
+                <h2 className='underline'>Session Info</h2>
                 {sessionHeaders.map((header, index) => (
                     <li key={index}>
                         <DbHeader
@@ -54,8 +54,8 @@ export function AcceptableHeaders({ setSelectedAcceptableHeader,  selectedAccept
                     </li>
                 ))}
             </ul>
-            <ul>
-                <h2 className='underline'>Route</h2>
+            <ul className='p-2'>
+                <h2 className='underline'>Route Info</h2>
                 {routeHeaders.map((header, index) => (
                     <li key={index}>
                     <DbHeader
@@ -66,8 +66,8 @@ export function AcceptableHeaders({ setSelectedAcceptableHeader,  selectedAccept
                 </li>
                 ))}
             </ul>
-            <ul>
-                <h2 className='underline'>Exercise</h2>
+            <ul className='p-2'>
+                <h2 className='underline'>Non-Sport Specific</h2>
                 {exerciseHeaders.map((header, index) => (
                     <li key={index}>
                     <DbHeader

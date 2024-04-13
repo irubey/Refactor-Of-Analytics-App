@@ -1,4 +1,6 @@
 import {DateFormat} from '@ImportData/types/UITypes';
+import Image from 'next/image';
+import chainLink from '@static/chainLink.png';
 
 type LinkButtonProps = {
     selectedCsvHeader: string | null,
@@ -24,19 +26,14 @@ export function LinkButton({ selectedCsvHeader, selectedAcceptableHeader, setMat
         
     }
     return (
-        <>
+        <div className='flex justify-center'>
             {selectedCsvHeader && selectedAcceptableHeader && (
             <button 
             onClick={handleUserSelectedHeaderMatch}>
-            Link
+                <Image src={chainLink} alt="linked icon" style={{ width:'auto', height:'auto'}}/>
             </button>
             )}
-            {(!selectedCsvHeader || !selectedAcceptableHeader) && (
-                <div className='border'>
-                    Please Select a header from both sides
-                </div>
-            )}
-        </>
+        </div>
     )
 }
 
