@@ -23,10 +23,11 @@ export function FieldMatchingUI({ totalRecords, fileInfo, needsValidationMatched
     const [selectedAcceptableHeader, setSelectedAcceptableHeader] = useState<string | null>(null);
     const [selectedCsvHeader, setSelectedCsvHeader] = useState<string | null>(null);
     const [dateFormat, setDateFormat] = useState<''| 'ymd' | 'mdy' | 'dmy'>('');
-    const [userHeaders, setUserHeaders] = useState<string[]>([]);
 
 
     return (
+        <>
+        {selectedCsvHeader && (
         <div className="grid gap-1 grid-cols-9 align-middle">
             <MatchedHeaders 
             matchedHeaders={matchedHeaders}
@@ -57,15 +58,33 @@ export function FieldMatchingUI({ totalRecords, fileInfo, needsValidationMatched
             tickModelHeaders={tickModelHeaders} 
             />
 
-            <SubmitNewDataButton 
-            matchedHeaders={matchedHeaders} 
-            totalRecords={totalRecords} 
-            dateFormat={dateFormat}
-            fileInfo={fileInfo}
-            />
-
-
 
 
         </div>
+        )}
+
+        {(!selectedCsvHeader) && (
+            <div className='grid grid-cols-9'>
+                <MatchedHeaders 
+                matchedHeaders={matchedHeaders}
+                needsValidationMatchedHeaders={needsValidationMatchedHeaders}
+                setSelectedAcceptableHeader={setSelectedAcceptableHeader}
+                setSelectedCsvHeader={setSelectedCsvHeader}
+                setMatchedHeaders={setMatchedHeaders}
+                />
+
+
+                <SubmitNewDataButton 
+                matchedHeaders={matchedHeaders} 
+                totalRecords={totalRecords} 
+                dateFormat={dateFormat}
+                fileInfo={fileInfo}
+                />
+            </div>
+        )}
+        </>
+
+
+
+
     )}

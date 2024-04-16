@@ -2,6 +2,7 @@ import { UserHeaderCard } from './UserHeaderCard';
 import { LinkButton } from './LinkButton';
 import { DbHeaderCard } from './DbHeaderCard';
 import { TickModelHeaders, TotalRecords, DateFormat, FileInfo } from '@ImportData/types/UITypes';
+import { SubmitNewDataButton } from './SubmitNewDataButton';
 
 type SelectedHeadersProps = {
     selectedCsvHeader: string | null,

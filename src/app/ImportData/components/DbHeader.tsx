@@ -13,7 +13,7 @@ export function DbHeader( { header, setSelectedAcceptableHeader, tickModelHeader
     const required = matchingHeader?.required;
 
     return (
-        <div onClick={handleDbHeaderClick} className={`${required ? 'border border-red-400 text-red-400 `' : ''}`}>
+        <div onClick={handleDbHeaderClick} className={`${required ? 'border border-red-400 border-dashed text-red-400' : 'text-green-300 capitalize'}`}>
             <b>{header}</b>
         </div>
     )

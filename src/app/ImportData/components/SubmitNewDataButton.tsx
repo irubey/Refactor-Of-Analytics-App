@@ -16,7 +16,7 @@ export function SubmitNewDataButton({ matchedHeaders, totalRecords, dateFormat, 
 
     return (
         <button
-         className=' col-span-9 bg-blue-400 hover:bg-blue-200 text-white font-bold py-2 px-4 rounded-md'
+         className='bg-blue-400 hover:bg-blue-200 text-white font-bold py-2 px-4 rounded-md justify-self-center self-center col-span-9 '
          onClick={handleClick}>Submit New Data
          </button>
     );
