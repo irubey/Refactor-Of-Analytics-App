@@ -55,9 +55,14 @@ export function UploadUserSpreadsheetButton({setTotalRecords, setFileInfo, tickM
                 id='fileUpload'
                 onChange={handleFileUpload}
                 accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                className='hidden'
                 />
+                <label 
+                htmlFor='fileUpload' 
+                className='block bg-blue-500 text-white text-center py-2 px-4 cursor-pointer hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 rounded-md'>
+                    Upload Spreadsheet
+                </label>
             </form>
-            
         </>
     );
 }

@@ -19,32 +19,37 @@ type SelectedHeadersProps = {
 
 export function SelectedHeaders({ selectedCsvHeader, selectedAcceptableHeader, dateFormat, totalRecords, setDateFormat, setSelectedCsvHeader, setSelectedAcceptableHeader, setMatchedHeaders, tickModelHeaders, fileInfo, matchedHeaders }: SelectedHeadersProps) {
     return (
-        <div className="col-span-9 grid grid-cols-9 border border-blue-500"> 
-            <UserHeaderCard
-            selectedCsvHeader={selectedCsvHeader}
-            setSelectedCsvHeader={setSelectedCsvHeader}
-            selectedAcceptableHeader={selectedAcceptableHeader}
-            dateFormat={dateFormat}
-            setDateFormat={setDateFormat}
-            totalRecords={totalRecords}
-            fileInfo={fileInfo}
-            matchedHeaders={matchedHeaders}
-            />
+        <>
+            <h1 className="row-start-2 col-span-2 text-3xl text-center self-center justify-self-center">
+                Select Headers
+            </h1>
+            <div className="col-span-5 col-start-3 grid grid-cols-9 border border-blue-500"> 
+                <UserHeaderCard
+                selectedCsvHeader={selectedCsvHeader}
+                setSelectedCsvHeader={setSelectedCsvHeader}
+                selectedAcceptableHeader={selectedAcceptableHeader}
+                dateFormat={dateFormat}
+                setDateFormat={setDateFormat}
+                totalRecords={totalRecords}
+                fileInfo={fileInfo}
+                matchedHeaders={matchedHeaders}
+                />
 
-            <LinkButton
-            selectedCsvHeader={selectedCsvHeader}
-            selectedAcceptableHeader={selectedAcceptableHeader}
-            setMatchedHeaders={setMatchedHeaders}
-            setSelectedCsvHeader={setSelectedCsvHeader}
-            setSelectedAcceptableHeader={setSelectedAcceptableHeader}
-            dateFormat={dateFormat}
-            />
+                <LinkButton
+                selectedCsvHeader={selectedCsvHeader}
+                selectedAcceptableHeader={selectedAcceptableHeader}
+                setMatchedHeaders={setMatchedHeaders}
+                setSelectedCsvHeader={setSelectedCsvHeader}
+                setSelectedAcceptableHeader={setSelectedAcceptableHeader}
+                dateFormat={dateFormat}
+                />
 
-            <DbHeaderCard
-            selectedAcceptableHeader={selectedAcceptableHeader}
-            setAcceptableHeader={setSelectedAcceptableHeader}
-            tickModelHeaders={tickModelHeaders}
-            />
-        </div>
+                <DbHeaderCard
+                selectedAcceptableHeader={selectedAcceptableHeader}
+                setAcceptableHeader={setSelectedAcceptableHeader}
+                tickModelHeaders={tickModelHeaders}
+                />
+            </div>
+        </>
     )
 }

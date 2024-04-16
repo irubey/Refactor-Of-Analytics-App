@@ -33,18 +33,25 @@ export function DbHeaderCard({ selectedAcceptableHeader, setAcceptableHeader, ti
     }, [selectedAcceptableHeader, tickModelHeaders])
     
     return (
-        <div className="col-start-6 col-span-2 first-line:border m-4 border-green-300">
+        <>
+        <div className="col-start-6 col-span-3 first-line:border m-4 border-green-300">
             {selectedAcceptableHeader && (
                 <>
-                    <h1 className="text-blue-300 font-bold underline">{selectedAcceptableHeader}</h1>
-                    <h2 className="truncate">{cardDescription}</h2>
-                    <ul>
-                        {cardExampleData.map((example, index) => (
-                            <li className='border' key={index}>{example}</li>
-                        ))}
-                    </ul>
+                    <h1 className="justify-items-center">
+                        Acceptable Database Fields
+                    </h1>
+                    <div className="col-start-6 col-span-3 m-4 border-2 border-blue-500">
+                        <h1 className="text-blue-300 font-bold underline">{selectedAcceptableHeader}</h1>
+                        <h2 className="truncate">{cardDescription}</h2>
+                        <ul>
+                            {cardExampleData.map((example, index) => (
+                                <li className='border' key={index}>{example}</li>
+                            ))}
+                        </ul>
+                    </div>
                 </>
             )}
         </div>
+        </>
     )
 }

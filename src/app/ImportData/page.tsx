@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { FieldMatchingUI } from "./components/FieldMatchingUI"
 import { TickModelHeaders, FileInfo, TotalRecords } from "@ImportData/types/UITypes";
+import { UploadInstructions } from "./components/UploadInstructions";
 
 const tickModelHeaders:TickModelHeaders = [
   { name: "route name",
@@ -190,7 +191,7 @@ export default function ImportDataPage() {
     return (
         <>
           {!hasRecords &&
-            <>
+            <div className="flex flex-col h-screen justify-center items-center">
               <UploadUserSpreadsheetButton 
               setTotalRecords={setTotalRecords}
               setFileInfo={setFileInfo}
@@ -198,10 +199,9 @@ export default function ImportDataPage() {
               setMatchedHeaders={setMatchedHeaders}
               setNeedsValidationMatchedHeaders={setNeedsValidationMatchedHeaders}
               />
-              <b>File must end in .csv</b>
               <br />
-              <Link href='/UploadInstructions'>Upload Instructions</Link>
-            </>
+              <UploadInstructions />
+            </div>
           }
 
             { hasRecords && 

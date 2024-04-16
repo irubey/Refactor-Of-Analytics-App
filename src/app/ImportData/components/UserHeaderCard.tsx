@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react"
 import { FileInfo, TotalRecords, DateFormat } from "@ImportData/types/UITypes"
+import trashcan from '@static/trashcan.jpg';
+import Image from 'next/image';
 
 type UserHeaderCardProps = {
     selectedCsvHeader: string | null,
@@ -75,36 +77,34 @@ export function UserHeaderCard({ selectedCsvHeader, setSelectedCsvHeader, select
 
     return (
         <>
-            {/* File Info Header */}
-                    <h1 className="col-start-3 col-span-2 underline capitalize justify-self-center truncate">
-                    {fileInfo.name}
-                </h1>
-        <div className=" col-start-3 col-span-2 grid grid-cols-3 m-4 border-2 border-blue-500">
-
-    
-            {/* CSV Header and Buttons on the same row */}
+        <h1 className="col-start-2 col-span-3 justify-self-center truncate">
+            Your Spreadsheet Field Information - {fileInfo.name}
+        </h1>
+        <div className="col-start-2 col-span-3 grid grid-cols-3 m-4 border-2 border-blue-500">
             <div className="col-start-1 col-span-3 flex justify-between items-end">
                 <h2 className="underline capitalize">
                     {selectedCsvHeader}
                 </h2>
     
-                {/* Conditionally render validation button and 'Don't Include' button */}
                 <div className="flex items-end">
                     {selectedCsvHeader && validationButton() && (
                         <div>
                             {validationButton()}
                         </div>
                     )}
-    
-                    {/* 'Don't Include' Button */}
-                    <button onClick={handleDontInclude} className="ml-4 truncate bg-red-200">
-                        Don't Include
+
+                    <button 
+                    onClick={handleDontInclude} 
+                    className="ml-4 truncate bg-red-200"
+                    >
+                        <Image src={trashcan} alt="trashcan icon" style={{ width:40, height:'auto'}}/>
                     </button>
                 </div>
             </div>
     
-            {/* Conditionally Render Header Data */}
+
             {selectedHeaderData && (
+                <>
                 <ul className="col-start-1 row-start-3 col-span-3">
                     {selectedHeaderData.map((headerData, index) => (
                         <li className="truncate" key={`${headerData}-${index}`}>
@@ -112,6 +112,7 @@ export function UserHeaderCard({ selectedCsvHeader, setSelectedCsvHeader, select
                         </li>
                     ))}
                 </ul>
+                </>
             )}
         </div>
         </>
