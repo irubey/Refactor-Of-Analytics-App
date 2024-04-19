@@ -22,19 +22,19 @@ export function AcceptableHeaders({ setSelectedAcceptableHeader,  selectedAccept
 
     useEffect(() => {
         setSessionHeaders(tickModelHeaders
-            .filter(header => header.category === "session" && !(header.name in matchedHeaders) && selectedAcceptableHeader !== header.name)
+            .filter(header => header.category === "session" && selectedAcceptableHeader !== header.name)
             .map(header => header.name));
     }, [selectedAcceptableHeader, matchedHeaders])
 
     useEffect(() => {
         setRouteHeaders(tickModelHeaders
-            .filter(header => header.category === "route" && !(header.name in matchedHeaders) && selectedAcceptableHeader !== header.name)
+            .filter(header => header.category === "route" && selectedAcceptableHeader !== header.name)
             .map(header => header.name));
     }, [selectedAcceptableHeader, matchedHeaders])
 
     useEffect(() => {
         setExerciseHeaders(tickModelHeaders
-            .filter(header => header.category === "other" && !(header.name in matchedHeaders) && selectedAcceptableHeader !== header.name)
+            .filter(header => header.category === "other" && selectedAcceptableHeader !== header.name)
             .map(header => header.name));
     }, [selectedAcceptableHeader, matchedHeaders])
 

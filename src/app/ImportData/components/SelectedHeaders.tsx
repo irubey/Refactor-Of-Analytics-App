@@ -3,6 +3,7 @@ import { LinkButton } from './LinkButton';
 import { DbHeaderCard } from './DbHeaderCard';
 import { TickModelHeaders, TotalRecords, DateFormat, FileInfo } from '@ImportData/types/UITypes';
 import { SubmitNewDataButton } from './SubmitNewDataButton';
+import { useState } from 'react';
 
 type SelectedHeadersProps = {
     selectedCsvHeader: string | null,
@@ -16,9 +17,29 @@ type SelectedHeadersProps = {
     tickModelHeaders: TickModelHeaders,
     fileInfo: FileInfo,
     matchedHeaders: Record<string, string>
+    dontIncludeHeaders: string[],
+    setDontIncludeHeaders: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-export function SelectedHeaders({ selectedCsvHeader, selectedAcceptableHeader, dateFormat, totalRecords, setDateFormat, setSelectedCsvHeader, setSelectedAcceptableHeader, setMatchedHeaders, tickModelHeaders, fileInfo, matchedHeaders }: SelectedHeadersProps) {
+export function SelectedHeaders(
+    { selectedCsvHeader, 
+        selectedAcceptableHeader, 
+        dateFormat, 
+        totalRecords, 
+        setDateFormat, 
+        setSelectedCsvHeader, 
+        setSelectedAcceptableHeader, 
+        setMatchedHeaders, 
+        tickModelHeaders, 
+        fileInfo, 
+        matchedHeaders,
+        dontIncludeHeaders,
+        setDontIncludeHeaders 
+        }: SelectedHeadersProps) {
+
+    
+   
+
     return (
         <>
             <h1 className="row-start-2 col-span-2 text-3xl text-center self-center justify-self-center">
@@ -34,6 +55,9 @@ export function SelectedHeaders({ selectedCsvHeader, selectedAcceptableHeader, d
                 totalRecords={totalRecords}
                 fileInfo={fileInfo}
                 matchedHeaders={matchedHeaders}
+                setMatchedHeaders={setMatchedHeaders}
+                dontIncludeHeaders={dontIncludeHeaders}
+                setDontIncludeHeaders={setDontIncludeHeaders}
                 />
 
                 <LinkButton

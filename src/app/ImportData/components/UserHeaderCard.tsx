@@ -12,6 +12,9 @@ type UserHeaderCardProps = {
     totalRecords: TotalRecords;
     fileInfo: FileInfo;
     matchedHeaders: Record<string, string>;
+    setMatchedHeaders: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+    dontIncludeHeaders: string[];
+    setDontIncludeHeaders: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 export function UserHeaderCard({
@@ -22,10 +25,13 @@ export function UserHeaderCard({
     setDateFormat, 
     totalRecords, 
     fileInfo, 
-    matchedHeaders
+    matchedHeaders,
+    setMatchedHeaders,
+    dontIncludeHeaders,
+    setDontIncludeHeaders
 }: UserHeaderCardProps) { 
     const [selectedHeaderData, setSelectedHeaderData] = useState<string[]>([]);
-    const [dontIncludeHeaders, setDontIncludeHeaders] = useState<string[]>([]);
+    
 
     // Compute unmatched headers dynamically and reactively
     const unmatchedUserHeaders = Object.keys(totalRecords[0]).filter(header => 
@@ -52,6 +58,8 @@ export function UserHeaderCard({
             }
         }
     }, [selectedCsvHeader, unmatchedUserHeaders]);
+
+
 
     function handleDontInclude() {
         if (!selectedCsvHeader) return;

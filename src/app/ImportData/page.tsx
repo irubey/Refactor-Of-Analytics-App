@@ -186,6 +186,7 @@ export default function ImportDataPage() {
 
   const totalNumberRecords = Object.keys(totalRecords).length;
   const hasRecords = totalNumberRecords > 0;
+  
 
 
     return (
@@ -211,7 +212,8 @@ export default function ImportDataPage() {
               needsValidationMatchedHeaders = {needsValidationMatchedHeaders}
               matchedHeaders={matchedHeaders}
               setMatchedHeaders={setMatchedHeaders}
-              tickModelHeaders={tickModelHeaders}/>
+              tickModelHeaders={tickModelHeaders}
+              />
             }
         </>
     );
