@@ -12,12 +12,13 @@ export async function handleAutomaticFieldMatch(
   headers.forEach((header: string) => {
     const lowerCsvHeader = header.trim().toLowerCase()
     const matchedTickModelHeader = tickModelHeaders.find(
-      (header: Record<string, any>) => header.name === lowerCsvHeader
+      (header: Record<string, any>) =>
+        header.name.toLowerCase() === lowerCsvHeader
     )
 
     if (matchedTickModelHeader) {
       if (matchedTickModelHeader.needsValidation) {
-        needsValidationMatchedHeaders.push(header)
+        needsValidationMatchedHeaders.push(header.toLowerCase())
       } else {
         matchedHeaders[matchedTickModelHeader.name] = header
       }

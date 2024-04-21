@@ -37,12 +37,14 @@ export function DbHeaderCard({ selectedAcceptableHeader, setAcceptableHeader, ti
             Acceptable Database Fields
         </h2>
         {selectedAcceptableHeader && (
-            <div className="col-start-6 col-span-3 grid m-4 border-2 border-blue-500">
-                <h1 className="h-8 justify-self-center self-center">{`Name of Field: '${selectedAcceptableHeader}'`}</h1>
-                <h2 className="truncate">{cardDescription}</h2>
-                <ul>
+            <div className="col-start-6 col-span-3 grid grid-cols-3  m-4 border-2 border-blue-500">
+                <h2 className="col-start-1 col-span-3 h-8 justify-self-center self-center">
+                    {`Name of Field: '${selectedAcceptableHeader}'`}
+                </h2>
+                {/* <h2 className="truncate">{cardDescription}</h2> */}
+                <ul className='col-start-1 row-start-2 col-span-3 grid grid-cols-1 overflow-auto w-full h-40'>
                     {cardExampleData.map((example, index) => (
-                        <li className='border' key={index}>{example}</li>
+                        <li className='truncate px-2 py-1' key={index}>{example}</li>
                     ))}
                 </ul>
             </div>

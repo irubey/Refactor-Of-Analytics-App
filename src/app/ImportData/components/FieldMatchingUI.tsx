@@ -1,49 +1,59 @@
-import { SelectedHeaders } from "./SelectedHeaders";
-import { SubmitNewDataButton } from "./SubmitNewDataButton";
-import { AcceptableHeaders } from "./AcceptableHeaders";
-import { useEffect, useState} from "react";
-import { MatchedHeaders } from "./MatchedHeaders";
-import { FileInfo, TotalRecords, TickModelHeaders } from "@ImportData/types/UITypes";
-
-
-
+import { SelectedHeaders } from "./SelectedHeaders"
+import { SubmitNewDataButton } from "./SubmitNewDataButton"
+import { AcceptableHeaders } from "./AcceptableHeaders"
+import { useEffect, useState } from "react"
+import { MatchedHeaders } from "./MatchedHeaders"
+import {
+  FileInfo,
+  TotalRecords,
+  TickModelHeaders,
+} from "@ImportData/types/UITypes"
 
 type FieldMatchingUIProps = {
-    totalRecords: TotalRecords,
-    fileInfo: FileInfo,
-    needsValidationMatchedHeaders: string[],
-    matchedHeaders: Record<string, string>,
-    setMatchedHeaders: React.Dispatch<React.SetStateAction<Record<string, string>>>,
-    tickModelHeaders: TickModelHeaders
+  totalRecords: TotalRecords
+  fileInfo: FileInfo
+  needsValidationMatchedHeaders: string[]
+  matchedHeaders: Record<string, string>
+  setMatchedHeaders: React.Dispatch<
+    React.SetStateAction<Record<string, string>>
+  >
+  tickModelHeaders: TickModelHeaders
 }
 
+export function FieldMatchingUI({
+  totalRecords,
+  fileInfo,
+  needsValidationMatchedHeaders,
+  matchedHeaders,
+  setMatchedHeaders,
+  tickModelHeaders,
+}: FieldMatchingUIProps) {
+  const [selectedAcceptableHeader, setSelectedAcceptableHeader] = useState<
+    string | null
+  >(null)
+  const [selectedCsvHeader, setSelectedCsvHeader] = useState<string | null>(
+    null
+  )
+  const [dateFormat, setDateFormat] = useState<"" | "ymd" | "mdy" | "dmy">("")
+  const [dontIncludeHeaders, setDontIncludeHeaders] = useState<string[]>([])
 
+  let percentComplete =
+    ((Object.keys(matchedHeaders).length + dontIncludeHeaders.length) /
+      Object.keys(totalRecords[0]).length) *
+    100
 
-export function FieldMatchingUI({ totalRecords, fileInfo, needsValidationMatchedHeaders, matchedHeaders, setMatchedHeaders, tickModelHeaders} : FieldMatchingUIProps ) {   
-    const [selectedAcceptableHeader, setSelectedAcceptableHeader] = useState<string | null>(null);
-    const [selectedCsvHeader, setSelectedCsvHeader] = useState<string | null>(null);
-    const [dateFormat, setDateFormat] = useState<''| 'ymd' | 'mdy' | 'dmy'>('');
-    const [dontIncludeHeaders, setDontIncludeHeaders] = useState<string[]>([]);
-
-    let percentComplete = (Object.keys(matchedHeaders).length + dontIncludeHeaders.length) / Object.keys(totalRecords[0]).length * 100;
-    console.log(percentComplete);
-
-
-
-
-    return (
-
-        <>
-        <MatchedHeaders 
+  return (
+    <div className="">
+      <MatchedHeaders
         matchedHeaders={matchedHeaders}
-        needsValidationMatchedHeaders={needsValidationMatchedHeaders}
         setSelectedAcceptableHeader={setSelectedAcceptableHeader}
         setSelectedCsvHeader={setSelectedCsvHeader}
         setMatchedHeaders={setMatchedHeaders}
-        />
-        { (percentComplete < 100) && (
-        <div className="grid gap-1 grid-cols-9 align-middle">
-            <SelectedHeaders
+      />
+
+      {percentComplete < 100 && (
+        <div className="grid grid-cols-9">
+          <SelectedHeaders
             selectedCsvHeader={selectedCsvHeader}
             selectedAcceptableHeader={selectedAcceptableHeader}
             dateFormat={dateFormat}
@@ -57,26 +67,28 @@ export function FieldMatchingUI({ totalRecords, fileInfo, needsValidationMatched
             matchedHeaders={matchedHeaders}
             dontIncludeHeaders={dontIncludeHeaders}
             setDontIncludeHeaders={setDontIncludeHeaders}
-            />
+            needsValidationMatchedHeaders={needsValidationMatchedHeaders}
+          />
 
-            <AcceptableHeaders 
+          <AcceptableHeaders
             setSelectedAcceptableHeader={setSelectedAcceptableHeader}
-            selectedAcceptableHeader={selectedAcceptableHeader}   
-            matchedHeaders={matchedHeaders} 
-            tickModelHeaders={tickModelHeaders} 
-            />
+            selectedAcceptableHeader={selectedAcceptableHeader}
+            matchedHeaders={matchedHeaders}
+            tickModelHeaders={tickModelHeaders}
+          />
         </div>
-        )}
+      )}
 
-        {(percentComplete === 100) && (
-            <div className='grid grid-cols-9'>
-                <SubmitNewDataButton 
-                matchedHeaders={matchedHeaders} 
-                totalRecords={totalRecords} 
-                dateFormat={dateFormat}
-                fileInfo={fileInfo}
-                />
-            </div>
-        )}
-        </>
-    )}
+      {percentComplete === 100 && (
+        <div className="grid grid-cols-9">
+          <SubmitNewDataButton
+            matchedHeaders={matchedHeaders}
+            totalRecords={totalRecords}
+            dateFormat={dateFormat}
+            fileInfo={fileInfo}
+          />
+        </div>
+      )}
+    </div>
+  )
+}

@@ -67,28 +67,6 @@ export function UserHeaderCard({
         setSelectedCsvHeader(unmatchedUserHeaders.length > 1 ? unmatchedUserHeaders[1] : null);
     }
 
-    function validationButton() {
-        switch (selectedAcceptableHeader) {
-            case null:
-                return;
-            case "date":
-                return (
-                    <select
-                        onChange={(e) => setDateFormat(e.target.value as DateFormat)}
-                        value={dateFormat}
-                        required
-                    >
-                        <option value="" disabled>Select Format</option>
-                        <option value="ymd">Year Month Day</option>
-                        <option value="mdy">Month Day Year</option>
-                        <option value="dmy">Day Month Year</option>
-                    </select>
-                );
-            default:
-                return null;
-        }
-    }
-
     return (
         <>
             <h2 className="col-start-2 col-span-3 justify-self-center truncate">
@@ -99,12 +77,6 @@ export function UserHeaderCard({
                 <h2 className="col-start-2 h-8 justify-self-center self-center truncate">
                     {`Name of Field: '${selectedCsvHeader}'`}
                 </h2>
-
-                {selectedCsvHeader && validationButton() && (
-                    <div>
-                        {validationButton()}
-                    </div>
-                )}
 
                 <button 
                     onClick={handleDontInclude}
