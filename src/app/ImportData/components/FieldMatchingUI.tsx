@@ -3,6 +3,7 @@ import { SubmitNewDataButton } from "./SubmitNewDataButton"
 import { AcceptableHeaders } from "./AcceptableHeaders"
 import { useEffect, useState } from "react"
 import { MatchedHeaders } from "./MatchedHeaders"
+import { CompletionBar } from "@ImportData/components/CompletionBar"
 import {
   FileInfo,
   TotalRecords,
@@ -44,6 +45,8 @@ export function FieldMatchingUI({
 
   return (
     <div className="">
+      <CompletionBar hasRecords={true} percentComplete={percentComplete} />
+
       <MatchedHeaders
         matchedHeaders={matchedHeaders}
         setSelectedAcceptableHeader={setSelectedAcceptableHeader}

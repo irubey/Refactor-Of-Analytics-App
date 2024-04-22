@@ -40,13 +40,21 @@ export function LinkButton({
     <div className="flex justify-center">
       {selectedCsvHeader && selectedAcceptableHeader && (
         <button
-          disabled={isHeaderNeedsValidation}
+          disabled={isHeaderNeedsValidation && !dateFormat}
           onClick={handleUserSelectedHeaderMatch}
         >
           <Image
-            src={isHeaderNeedsValidation ? brokenChainLink : chainLink}
-            alt={isHeaderNeedsValidation ? "broken chain link" : "linked icon"}
-            style={{ width: "auto", height: "auto" }}
+            src={
+              isHeaderNeedsValidation && !dateFormat
+                ? brokenChainLink
+                : chainLink
+            }
+            alt={
+              isHeaderNeedsValidation && !dateFormat
+                ? "broken chain link"
+                : "linked icon"
+            }
+            style={{ width: "100px", height: "auto" }}
           />
         </button>
       )}
