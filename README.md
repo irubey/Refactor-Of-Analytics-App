@@ -16,32 +16,32 @@ This project is a refactor of a previous climbing analytics application prototyp
 ## Project Structure
 The project structure is organized as follows:
 ```
-.vscode/           # Visual Studio Code settings
-prisma/            # Prisma schema and migrations
-src/               # Source code
-  └ app/           # Main application code
-    └ImportData    # Contains Components and types for Import Data Page
-    └Visualizations# Contains Components and types for Import Data Page
-    └Actions       # Contains Server actions including automatic field match and parse user submitted spreadsheet
-    └api/ServerActions #Server acitons related to CRUD and analysis
-    └components    # SiteWide components
-    └static        # Static Assets
-    └styles        # global stylesheet
+.vscode/                 # Visual Studio Code settings
+prisma/                  # Prisma schema and migrations
+src/                     # Source code
+  └ app/                 # Main application code
+    └ImportData          # Contains Components and types for Import Data Page
+    └Visualizations      # Contains Components and types for Visualization Page
+    └Actions             # Server actions including automatic field match and parse user submitted spreadsheet
+    └api/ServerActions   # Server acitons related to CRUD and analysis
+    └components          # SiteWide components
+    └static              # Static Assets
+    └styles              # global stylesheet
     
-.eslintrc.json     # ESLint configuration
-.gitattributes     # Git attributes configuration
-.gitignore         # Files and directories to ignore in Git
-next.config.mjs    # Next.js configuration
-package-lock.json  # NPM lock file
-package.json       # NPM package configuration
-postcss.config.js  # PostCSS configuration
-prisma.ts          # Prisma client setup
-script.ts          # Custom scripts
-tailwind.config.js # Tailwind CSS configuration
-tsconfig.json      # TypeScript configuration
-ticks.csv          # Example csv data
-xlsm.xlsm          # Example xlsm data
-xlsx.xlsx          # Example xlsx data
+.eslintrc.json           # ESLint configuration
+.gitattributes           # Git attributes configuration
+.gitignore               # Files and directories to ignore in Git
+next.config.mjs          # Next.js configuration
+package-lock.json        # NPM lock file
+package.json             # NPM package configuration
+postcss.config.js        # PostCSS configuration
+prisma.ts                # Prisma client setup
+script.ts                # Custom scripts
+tailwind.config.js       # Tailwind CSS configuration
+tsconfig.json            # TypeScript configuration
+ticks.csv                # Example csv data
+xlsm.xlsm                # Example xlsm data
+xlsx.xlsx                # Example xlsx data
 ```
 
 
