@@ -1,7 +1,7 @@
 
 # Refactor of Analytics App
 
-Welcome to the Refactor of Analytics App repository! This project is a climbing analytics application built with Next.js and TypeScript, iterating on a previous prototype analytic application. The app utilizes various modern web technologies to provide a comprehensive and interactive experience for analyzing climbing data.
+Welcome to the Refactor of Analytics App repository! This project is in progress, it's a climbing analytics application built with Next.js and TypeScript, iterating on a previous prototype analytic application. The app utilizes various modern web technologies to provide a comprehensive and interactive experience for analyzing climbing data.
 
 ## Table of Contents
 - [Introduction](#introduction)
